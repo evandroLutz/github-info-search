@@ -14,6 +14,7 @@ function Main(): JSX.Element {
     (async () => {
       const generalInfos = await getUserInfos('evandroLutz');
       setuserInfos(generalInfos);
+      console.log('user',userInfos);
     })();
   }, []);
   
