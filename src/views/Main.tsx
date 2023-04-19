@@ -1,23 +1,32 @@
 import React from 'react';
-import logo from '../logo.svg';
-import '../App.css';
+import UserPic from '../components/UserPic';
+import getUserInfos from '../actions/getUserInfos';
+import { useState, useEffect } from "react";
+import UserInfosContext from '../contexts/UserInfosContext';
+import UserInfos from '../interfaces/UserInfos';
+
 
 function Main(): JSX.Element {
+
+  const [userInfos, setuserInfos] = useState<UserInfos>({ avatar_url: "", message: "" });
+
+  useEffect(() => {
+    (async () => {
+      const generalInfos = await getUserInfos('evandroLutz');
+      setuserInfos(generalInfos);
+    })();
+  }, []);
+  
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <UserInfosContext.Provider value={userInfos}>
+          <UserPic/>
+        </UserInfosContext.Provider>
         <p>
           Edit <code>src/App.tsx</code> and save to reload 2.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
