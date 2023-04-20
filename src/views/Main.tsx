@@ -1,33 +1,58 @@
-import React from 'react';
+import React,{ useState, useEffect }  from 'react';
 import UserPic from '../components/UserPic';
+import UserRepo from '../components/UserRepo';
+import DropDownFilter from '../components/DropDownFilter';
 import getUserInfos from '../actions/getUserInfos';
-import { useState, useEffect } from "react";
+import getUserRepos from '../actions/getUserRepos';
 import UserInfosContext from '../contexts/UserInfosContext';
-import UserInfos from '../interfaces/UserInfos';
+import UserRepoContext from '../contexts/UserRepoContext';
+import UserAllReposContext from '../contexts/UserAllReposContext';
+import IUserInfos from '../interfaces/IUserInfos';
+import IUserRepos from '../interfaces/IUserRepos';
 
 
 function Main(): JSX.Element {
 
-  const [userInfos, setuserInfos] = useState<UserInfos>({ avatar_url: "", message: "" });
+  const [userInfos, setUserInfos] = useState<IUserInfos>({ avatar_url: "", message: "" });
+  const [userRepos, setUserRepos] = useState<IUserRepos[]>([]);
+  const [filteredUserRepos, setfilteredUserRepos] = useState<IUserRepos[]>();
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       const generalInfos = await getUserInfos('evandroLutz');
-      setuserInfos(generalInfos);
-      console.log('user',userInfos);
-    })();
+      if(generalInfos){
+        setUserInfos(generalInfos);
+        const repos = await getUserRepos('evandroLutz');
+        setUserRepos(repos);
+        console.log('repos', repos);
+      }
+    }
+    fetchData();
   }, []);
   
 
   return (
     <div className="App">
       <header className="App-header">
+        { 
+        userInfos.message !== 'Not Found' ? 
+        <>
         <UserInfosContext.Provider value={userInfos}>
           <UserPic/>
         </UserInfosContext.Provider>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload 2.
-        </p>
+        <UserAllReposContext.Provider value={userRepos}>
+          <DropDownFilter/>
+        </UserAllReposContext.Provider>
+        </>
+        : null
+        }
+        <>
+          {userRepos?.map((repo, index) => (
+          <UserRepoContext.Provider key={index} value={repo}>
+            <UserRepo/>
+          </UserRepoContext.Provider>
+          ))}
+        </>
       </header>
     </div>
   );
