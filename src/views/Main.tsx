@@ -29,8 +29,8 @@ function Main(): JSX.Element {
     }
     fetchData();
   }, []);
-  
 
+ 
   return (
     <div className="App">
       <header className="App-header">
@@ -40,17 +40,26 @@ function Main(): JSX.Element {
         <UserInfosContext.Provider value={userInfos}>
           <UserPic/>
         </UserInfosContext.Provider>
-        <UserAllReposContext.Provider value={userRepos}>
+        <UserAllReposContext.Provider value={{ userRepos, setfilteredUserRepos }}>
           <DropDownFilter/>
         </UserAllReposContext.Provider>
         </>
         : null
         }
         <>
-          {userRepos?.map((repo, index) => (
+          { 
+          filteredUserRepos 
+          ?
+          filteredUserRepos.map((repo, index) => (
           <UserRepoContext.Provider key={index} value={repo}>
             <UserRepo/>
           </UserRepoContext.Provider>
+          ))
+          :  
+          userRepos.map((repo, index) => (
+            <UserRepoContext.Provider key={index} value={repo}>
+              <UserRepo/>
+            </UserRepoContext.Provider>
           ))}
         </>
       </header>
