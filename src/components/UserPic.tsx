@@ -2,7 +2,6 @@ import React from 'react';
 import { useContext } from "react";
 import UserInfosContext from '../contexts/UserInfosContext';
 
-
 function UserPic(): JSX.Element {
     const user = useContext(UserInfosContext);
     const url = user?.avatar_url;

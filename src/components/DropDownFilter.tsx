@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserAllReposContext from '../contexts/UserAllReposContext';
 import getAllLanguages from '../actions/getAllLanguages';
-import filterByLanguage from '../actions/filterByLanguage';
-
 
 function DropDownFilter(): JSX.Element {
 
     const [languages, setLanguages] = useState<string[]>();
-    const { userRepos, setfilteredUserRepos } = useContext(UserAllReposContext);
+    const { userRepos, setfilteredLang } = useContext(UserAllReposContext);
   
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +17,7 @@ function DropDownFilter(): JSX.Element {
 
     return(
         <div className='dropDown'>
-            <select name='languages' id='languages' onChange={event => setfilteredUserRepos(event.target.value === 'Todas' ? userRepos : filterByLanguage(event.target.value, userRepos))}>
+            <select name='languages' id='languages' onChange={event => setfilteredLang(event.target.value)}>
                 <option value='' disabled selected hidden>linguagem.</option>
                 {
                      languages?.map((language, index) => (

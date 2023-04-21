@@ -1,14 +1,12 @@
-import IUserRepos from '../interfaces/IUserRepos';
+import IUserAllRepos from '../interfaces/IUserAllRepos';
 import { createContext } from "react";
 
-interface IUserAllReposContext {
-  userRepos: IUserRepos[];
-  setfilteredUserRepos: React.Dispatch<React.SetStateAction<IUserRepos[] | undefined>>
-}
-
-const UserAllReposContext = createContext<IUserAllReposContext>({
+const UserAllReposContext = createContext<IUserAllRepos>({
   userRepos: [],
+  filteredUserRepos: [],
   setfilteredUserRepos: () => {},
+  setfilteredLang:  () => {},
+  setfilteredName:  () => {},
 });
 
 export default UserAllReposContext;
