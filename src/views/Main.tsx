@@ -5,6 +5,7 @@ import DropDownFilter from '../components/DropDownFilter';
 import InputSearch from '../components/InputSearch';
 import getUserInfos from '../actions/getUserInfos';
 import getUserRepos from '../actions/getUserRepos';
+import getUserReposNPages from '../actions/getUserReposNPages';
 import filterByLanguage from '../actions/filterByLanguage';
 import filterByName from '../actions/filterByName';
 import UserInfosContext from '../contexts/UserInfosContext';
@@ -25,12 +26,19 @@ function Main(): JSX.Element {
 
   useEffect(() => {
     const fetchData = async () => {
+      const allUserRepos: IUserRepos[] = [];
       const generalInfos = await getUserInfos('evandroLutz');
       if(generalInfos){
         setUserInfos(generalInfos);
-        const repos = await getUserRepos('evandroLutz');
-        setUserRepos(repos);
-        setfilteredUserRepos(repos);
+        const nPages = await getUserReposNPages('evandroLutz');
+        let counter = 1
+        while(counter <= nPages){
+          const repos = await getUserRepos('evandroLutz', counter);
+          counter++;
+          allUserRepos.push(...repos);
+        }
+        setUserRepos(allUserRepos);
+        setfilteredUserRepos(allUserRepos);
       }
     }
     fetchData();
