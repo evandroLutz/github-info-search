@@ -1,13 +1,18 @@
 import React,{ useState, useEffect }  from 'react';
 import UserPic from '../components/UserPic';
+import CheckBoxFork from '../components/CheckBoxFork';
 import UserRepo from '../components/UserRepo';
 import DropDownFilter from '../components/DropDownFilter';
 import InputSearch from '../components/InputSearch';
+import RadioInputs from '../components/RadioInputs';
 import getUserInfos from '../actions/getUserInfos';
 import getUserRepos from '../actions/getUserRepos';
 import getUserReposNPages from '../actions/getUserReposNPages';
 import filterByLanguage from '../actions/filterByLanguage';
 import filterByName from '../actions/filterByName';
+import filterByForked from '../actions/filterByForked';
+import orderByName from '../actions/orderByName';
+import orderByUpdated_at from '../actions/orderByUpdated_at';
 import UserInfosContext from '../contexts/UserInfosContext';
 import UserRepoContext from '../contexts/UserRepoContext';
 import UserAllReposContext from '../contexts/UserAllReposContext';
@@ -22,6 +27,9 @@ function Main(): JSX.Element {
   const [filteredUserRepos, setfilteredUserRepos] = useState<IUserRepos[]>([]);
   const [filteredLang, setfilteredLang] = useState<string>('Todas');
   const [filteredName, setfilteredName] = useState<string>('');
+  const [hasFork, setHasFork] = useState<string[]>([]);
+  const [filteredIssues, setfilteredIssues] = useState<string>('cleaned');
+  const [orderedBy, setOrderedBy] = useState<string>('alphabetic');
 
 
   useEffect(() => {
@@ -48,8 +56,10 @@ function Main(): JSX.Element {
     let repos: IUserRepos[];
     repos = filterByLanguage(filteredLang,userRepos);
     repos = filterByName(filteredName,repos);
-    setfilteredUserRepos(repos);
-  }, [filteredLang, filteredName, userRepos]);
+    repos = filterByForked(hasFork,repos);
+    const ordered = orderedBy === 'alphabetic' ? orderByName(repos) : orderByUpdated_at(repos);
+    setfilteredUserRepos(ordered);
+  }, [filteredLang, filteredName, userRepos, orderedBy, hasFork]);
 
   return (
     <div className="App">
@@ -60,9 +70,11 @@ function Main(): JSX.Element {
         <UserInfosContext.Provider value={userInfos}>
           <UserPic/>
         </UserInfosContext.Provider>
-        <UserAllReposContext.Provider value={{ setfilteredName, setfilteredLang, filteredUserRepos, userRepos, setfilteredUserRepos }}>
+        <UserAllReposContext.Provider value={{ hasFork , setHasFork, orderedBy, setOrderedBy, setfilteredName, setfilteredLang, filteredUserRepos, userRepos, setfilteredUserRepos }}>
           <DropDownFilter/>
           <InputSearch/>
+          <RadioInputs/>
+          <CheckBoxFork/>
         </UserAllReposContext.Provider>
         </>
         : null

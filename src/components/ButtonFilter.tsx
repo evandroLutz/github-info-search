@@ -1,7 +1,4 @@
 import React from 'react';
-import { useContext } from "react";
-import UserInfosContext from '../contexts/UserInfosContext';
-
 
 function ButtonFilter(): JSX.Element {
     return(

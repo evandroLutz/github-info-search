@@ -1,7 +1,8 @@
 interface IUserRepos {
     name: string;
-    update_at: string;
+    updated_at: string;
     language: string |  null;
+    fork: boolean;
 }
 
 export default IUserRepos;
