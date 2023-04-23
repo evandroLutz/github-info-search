@@ -1,6 +1,6 @@
-import UserInfos from '../interfaces/UserInfos';
+import IUserInfos from '../interfaces/IUserInfos';
 import { createContext } from "react";
 
-const UserInfosContext = createContext<UserInfos | undefined>(undefined);
+const UserInfosContext = createContext<IUserInfos | undefined>(undefined);
 
 export default UserInfosContext;

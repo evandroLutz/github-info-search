@@ -1,6 +1,6 @@
-interface UserInfos {
+interface IUserInfos {
     avatar_url: string;
     message: string | undefined;
 }
 
-export default UserInfos;
+export default IUserInfos;
