@@ -12,6 +12,7 @@ const UserAllReposContext = createContext<IUserAllRepos>({
   setfilteredSize: () => {},
   setOrderedBy:  () => {},
   setHasFork:  () => {},
+  setUserName:  () => {},
 });
 
 export default UserAllReposContext;

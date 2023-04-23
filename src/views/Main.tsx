@@ -6,16 +6,15 @@ import DropDownFilter from '../components/DropDownFilter';
 import InputSearch from '../components/InputSearch';
 import InputSearchSize from '../components/InputSearchSize';
 import RadioInputs from '../components/RadioInputs';
-import getUserInfos from '../actions/getUserInfos';
-import getUserRepos from '../actions/getUserRepos';
-import getUserReposNPages from '../actions/getUserReposNPages';
 import UserInfosContext from '../contexts/UserInfosContext';
 import UserRepoContext from '../contexts/UserRepoContext';
 import UserAllReposContext from '../contexts/UserAllReposContext';
 import IUserInfos from '../interfaces/IUserInfos';
 import IUserRepos from '../interfaces/IUserRepos';
 import organizeRepos from '../actions/organizeRepos';
-
+import getUserInfos from '../actions/getUserInfos';
+import getAllUserRepos from '../actions/getAllUserRepos';
+import InputSearchUserName from '../components/InputSearchUserName';
 
 function Main(): JSX.Element {
 
@@ -27,26 +26,20 @@ function Main(): JSX.Element {
   const [hasFork, setHasFork] = useState<string[]>([]);
   const [filteredSize, setfilteredSize] = useState<number | null>(null);
   const [orderedBy, setOrderedBy] = useState<string>('alphabetic');
+  const [userName, setUserName] = useState<string>('evandroLutz');
 
   useEffect(() => {
-    const fetchData = async () => {
-      const allUserRepos: IUserRepos[] = [];
-      const generalInfos = await getUserInfos('evandroLutz');
-      if(generalInfos){
+    (async () => {
+      const generalInfos = await getUserInfos(userName);
+      if(!generalInfos.message){
+        console.log(generalInfos,'general');
+        const allUserRepos = await getAllUserRepos(userName);
         setUserInfos(generalInfos);
-        const nPages = await getUserReposNPages('evandroLutz');
-        let counter = 1
-        while(counter <= nPages){
-          const repos = await getUserRepos('evandroLutz', counter);
-          counter++;
-          allUserRepos.push(...repos);
-        }
         setUserRepos(allUserRepos);
         setfilteredUserRepos(allUserRepos);
       }
-    }
-    fetchData();
-  }, []);
+    })();
+  }, [userName]);
 
   useEffect(() => {
     const organizedRepos = organizeRepos(filteredLang, filteredName, userRepos, orderedBy, hasFork, filteredSize);
@@ -57,16 +50,17 @@ function Main(): JSX.Element {
     <div className="App">
       <header className="App-header">
         { 
-        userInfos.message !== 'Not Found' ? 
+        !userInfos.message ? 
         <>
         <UserInfosContext.Provider value={userInfos}>
           <UserPic/>
         </UserInfosContext.Provider>
         <UserAllReposContext.Provider 
-          value={{ hasFork , setHasFork, orderedBy, 
+          value={{ hasFork, setHasFork, orderedBy, 
             setOrderedBy, setfilteredSize, setfilteredName, setfilteredLang, 
-            filteredUserRepos, userRepos, setfilteredUserRepos 
+            filteredUserRepos, userRepos, setfilteredUserRepos, setUserName
           }}>
+          <InputSearchUserName/>
           <DropDownFilter/>
           <InputSearch/>
           <RadioInputs/>
