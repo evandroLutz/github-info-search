@@ -6,6 +6,7 @@ interface IUserAllRepos {
   setfilteredUserRepos: React.Dispatch<React.SetStateAction<IUserRepos[]>>
   setfilteredLang: React.Dispatch<React.SetStateAction<string>>
   setfilteredName: React.Dispatch<React.SetStateAction<string>>
+  setfilteredSize: React.Dispatch<React.SetStateAction<number | null>>
   setOrderedBy: React.Dispatch<React.SetStateAction<string>>
   orderedBy: string;
   hasFork: string[];

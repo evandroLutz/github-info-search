@@ -9,6 +9,7 @@ const UserAllReposContext = createContext<IUserAllRepos>({
   setfilteredUserRepos: () => {},
   setfilteredLang:  () => {},
   setfilteredName:  () => {},
+  setfilteredSize: () => {},
   setOrderedBy:  () => {},
   setHasFork:  () => {},
 });

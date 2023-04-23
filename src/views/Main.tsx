@@ -4,20 +4,17 @@ import CheckBoxFork from '../components/CheckBoxFork';
 import UserRepo from '../components/UserRepo';
 import DropDownFilter from '../components/DropDownFilter';
 import InputSearch from '../components/InputSearch';
+import InputSearchSize from '../components/InputSearchSize';
 import RadioInputs from '../components/RadioInputs';
 import getUserInfos from '../actions/getUserInfos';
 import getUserRepos from '../actions/getUserRepos';
 import getUserReposNPages from '../actions/getUserReposNPages';
-import filterByLanguage from '../actions/filterByLanguage';
-import filterByName from '../actions/filterByName';
-import filterByForked from '../actions/filterByForked';
-import orderByName from '../actions/orderByName';
-import orderByUpdated_at from '../actions/orderByUpdated_at';
 import UserInfosContext from '../contexts/UserInfosContext';
 import UserRepoContext from '../contexts/UserRepoContext';
 import UserAllReposContext from '../contexts/UserAllReposContext';
 import IUserInfos from '../interfaces/IUserInfos';
 import IUserRepos from '../interfaces/IUserRepos';
+import organizeRepos from '../actions/organizeRepos';
 
 
 function Main(): JSX.Element {
@@ -28,9 +25,8 @@ function Main(): JSX.Element {
   const [filteredLang, setfilteredLang] = useState<string>('Todas');
   const [filteredName, setfilteredName] = useState<string>('');
   const [hasFork, setHasFork] = useState<string[]>([]);
-  const [filteredIssues, setfilteredIssues] = useState<string>('cleaned');
+  const [filteredSize, setfilteredSize] = useState<number | null>(null);
   const [orderedBy, setOrderedBy] = useState<string>('alphabetic');
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,13 +49,9 @@ function Main(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    let repos: IUserRepos[];
-    repos = filterByLanguage(filteredLang,userRepos);
-    repos = filterByName(filteredName,repos);
-    repos = filterByForked(hasFork,repos);
-    const ordered = orderedBy === 'alphabetic' ? orderByName(repos) : orderByUpdated_at(repos);
-    setfilteredUserRepos(ordered);
-  }, [filteredLang, filteredName, userRepos, orderedBy, hasFork]);
+    const organizedRepos = organizeRepos(filteredLang, filteredName, userRepos, orderedBy, hasFork, filteredSize);
+    setfilteredUserRepos(organizedRepos);
+  }, [filteredLang, filteredName, userRepos, orderedBy, hasFork, filteredSize]);
 
   return (
     <div className="App">
@@ -70,11 +62,16 @@ function Main(): JSX.Element {
         <UserInfosContext.Provider value={userInfos}>
           <UserPic/>
         </UserInfosContext.Provider>
-        <UserAllReposContext.Provider value={{ hasFork , setHasFork, orderedBy, setOrderedBy, setfilteredName, setfilteredLang, filteredUserRepos, userRepos, setfilteredUserRepos }}>
+        <UserAllReposContext.Provider 
+          value={{ hasFork , setHasFork, orderedBy, 
+            setOrderedBy, setfilteredSize, setfilteredName, setfilteredLang, 
+            filteredUserRepos, userRepos, setfilteredUserRepos 
+          }}>
           <DropDownFilter/>
           <InputSearch/>
           <RadioInputs/>
           <CheckBoxFork/>
+          <InputSearchSize/>
         </UserAllReposContext.Provider>
         </>
         : null
