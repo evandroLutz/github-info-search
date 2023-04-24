@@ -9,6 +9,9 @@ const DropDown = styled.select`
     outline: none;
     color: rgb(124, 82, 149);
     padding: 10px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
     option:hover {
         background-color: #bca0dc;
     }

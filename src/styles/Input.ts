@@ -5,7 +5,7 @@ const Input = styled.input`
     height: 50px;
     border-radius: 25px;
     display: flex;
-    padding: 16px;
+    padding: 12px;
     color: #7c5295;
     border: none;
 `;

@@ -5,6 +5,10 @@ import styled from "styled-components";
         font-family: 'Roboto', sans-serif;
         font-size: 24px !important;
         color: #ffffff;
+        p{
+            display: flex;
+            gap: 16px;
+        }
     `;
 
 

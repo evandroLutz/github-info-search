@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from "react";
 import UserInfosContext from '../contexts/UserInfosContext';
 import UserInfosContainer from "../styles/UserInfosContainer";
+import { FaUser, FaFolderOpen, FaLocationArrow } from 'react-icons/fa';
 
 function UserInfos(): JSX.Element {
 
@@ -12,9 +13,9 @@ function UserInfos(): JSX.Element {
    
     return(
         <UserInfosContainer className="userInfos">
-            <p>{name}</p>
-            <p>Repositórios públicos: {public_repos}</p>
-            <p>Localização: {location}</p>
+            <p><FaUser/> {name}</p>
+            <p><FaFolderOpen/> Repositórios públicos: {public_repos}</p>
+            <p><FaLocationArrow/> Localização: {location}</p>
         </UserInfosContainer>    
     )
 }

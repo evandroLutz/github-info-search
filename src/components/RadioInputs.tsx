@@ -2,6 +2,8 @@ import React from 'react';
 import { useContext } from "react";
 import UserAllReposContext from '../contexts/UserAllReposContext';
 import RadioContainer from '../styles/RadioContainer';
+import SvgContainer from '../styles/SvgContainer';
+import { FaSortAlphaDown, FaBusinessTime } from  'react-icons/fa';
 
 function InputSearch(): JSX.Element {
 
@@ -14,28 +16,34 @@ function InputSearch(): JSX.Element {
 
     return( 
         <RadioContainer>
-            <label>
-                <input
-                    type="radio"
-                    name="order"
-                    value="alphabetic"
-                    checked={orderedBy === 'alphabetic'}
-                    onChange={onRadioChange}
-                />
-            <span className="checkmark"></span>
-            Alfabeticamente
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="order"
-                    value="updated_at"
-                    checked={orderedBy === 'updated_at'}
-                    onChange={onRadioChange}
-                />
-            <span className="checkmark"></span>
-            Mais recentes
-            </label>
+                <label>
+                    <SvgContainer>
+                        <input
+                            type="radio"
+                            name="order"
+                            value="alphabetic"
+                            checked={orderedBy === 'alphabetic'}
+                            onChange={onRadioChange}
+                        />
+                        <span className="checkmark"></span>
+                        <FaSortAlphaDown/>
+                        Alfabeticamente
+                    </SvgContainer>
+                </label>
+                <label>
+                    <SvgContainer>
+                        <input
+                            type="radio"
+                            name="order"
+                            value="updated_at"
+                            checked={orderedBy === 'updated_at'}
+                            onChange={onRadioChange}
+                        />
+                        <span className="checkmark"></span>
+                        <FaBusinessTime/>
+                        Mais recentes
+                    </SvgContainer>
+                </label>
       </RadioContainer>
     )
 }

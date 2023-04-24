@@ -11,6 +11,10 @@ const Button = styled.button`
     background: #663a82;
     border: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 `;
 
 export default Button;
