@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useContext } from "react";
 import UserAllReposContext from '../contexts/UserAllReposContext';
+import Input from "../styles/Input";
+import Button from "../styles/Button";
 
 function InputSearchUserName(): JSX.Element {
 
@@ -10,10 +12,10 @@ function InputSearchUserName(): JSX.Element {
 
     return( 
       <>
-      <input onChange={event => {
+      <Input onChange={event => {
         setInputValue(event.target.value ? event.target.value: 'evandroLutz')}} type="search" placeholder="evandroLutz"/>
-      <button onClick={event => {
-        setUserName(inputValue)}}>Buscar usuário</button>   
+      <Button onClick={event => {
+        setUserName(inputValue)}}>Buscar usuário</Button>   
       </>
     )
 }

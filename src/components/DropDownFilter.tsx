@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserAllReposContext from '../contexts/UserAllReposContext';
 import getAllLanguages from '../actions/getAllLanguages';
+import DropDown from '../styles/DropDown';
 
 function DropDownFilter(): JSX.Element {
 
@@ -17,7 +18,7 @@ function DropDownFilter(): JSX.Element {
 
     return(
         <div className='dropDown'>
-            <select name='languages' id='languages' onChange={event => setfilteredLang(event.target.value)}>
+            <DropDown name='languages' id='languages' onChange={event => setfilteredLang(event.target.value)}>
                 <option value='' disabled selected hidden>linguagem.</option>
                 {
                      languages?.map((language, index) => (
@@ -25,7 +26,7 @@ function DropDownFilter(): JSX.Element {
                     ))
                 }
                 <option value='Todas' >Todas</option>
-            </select>
+            </DropDown>
         </div>    
     )
 }

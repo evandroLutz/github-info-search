@@ -1,13 +1,14 @@
 import React from 'react';
 import { useContext } from "react";
 import UserAllReposContext from '../contexts/UserAllReposContext';
+import Input from "../styles/Input";
 
 function InputSearch(): JSX.Element {
 
     const { setfilteredName } = useContext(UserAllReposContext);
 
     return( 
-      <input type="search" placeholder="Pesquisar por nome" onChange={event => {
+      <Input type="search" placeholder="Repositório contém..." onChange={event => {
         setfilteredName(event.target.value)}}/> 
     )
 }

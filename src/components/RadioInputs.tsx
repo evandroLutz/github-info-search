@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext } from "react";
 import UserAllReposContext from '../contexts/UserAllReposContext';
+import RadioContainer from '../styles/RadioContainer';
 
 function InputSearch(): JSX.Element {
 
@@ -12,7 +13,7 @@ function InputSearch(): JSX.Element {
     }
 
     return( 
-        <div>
+        <RadioContainer>
             <label>
                 <input
                     type="radio"
@@ -21,7 +22,8 @@ function InputSearch(): JSX.Element {
                     checked={orderedBy === 'alphabetic'}
                     onChange={onRadioChange}
                 />
-                Alfabeticamente
+            <span className="checkmark"></span>
+            Alfabeticamente
             </label>
             <label>
                 <input
@@ -31,9 +33,10 @@ function InputSearch(): JSX.Element {
                     checked={orderedBy === 'updated_at'}
                     onChange={onRadioChange}
                 />
-                Mais recentes
+            <span className="checkmark"></span>
+            Mais recentes
             </label>
-      </div>
+      </RadioContainer>
     )
 }
 

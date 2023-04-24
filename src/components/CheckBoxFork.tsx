@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext } from "react";
 import UserAllReposContext from '../contexts/UserAllReposContext';
+import RadioContainer from '../styles/RadioContainer';
 
 function InputSearch(): JSX.Element {
 
@@ -19,7 +20,7 @@ function InputSearch(): JSX.Element {
     }
 
     return( 
-        <div>
+        <RadioContainer>
             <label>
                 <input
                     type="checkbox"
@@ -28,6 +29,7 @@ function InputSearch(): JSX.Element {
                     onChange={oncheckBoxChange}
                     checked={hasFork.includes('sim')}
                 />
+                <span className="checkmark"></span>
                 Sim
             </label>
             <label>
@@ -38,9 +40,10 @@ function InputSearch(): JSX.Element {
                     onChange={oncheckBoxChange}
                     checked={hasFork.includes('não')}
                 />
+                <span className="checkmark"></span>
                 Não
             </label>
-      </div>
+      </RadioContainer>
     )
 }
 
