@@ -9,9 +9,20 @@ const Repo = styled.div`
     border-radius: 25px;
     height: 80px;
     box-shadow: grey 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    a{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    a, div{
         text-decoration: none;
         color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+    svg, span{
+        color: #7c5295 !important;
     }
 `;
    
