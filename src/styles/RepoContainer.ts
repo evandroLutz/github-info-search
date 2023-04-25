@@ -10,6 +10,10 @@ const RepoContainer = styled.div`
     gap: 20px;
     height: fit-content;
     margin: 30px;
+    @media (max-width: 1570px){
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
 `;
    
 export default RepoContainer;

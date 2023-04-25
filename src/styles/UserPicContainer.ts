@@ -12,11 +12,18 @@ const UserPicContainer = styled.div`
     -webkit-box-pack: center;
     justify-content: center;
     border-radius: 30%;
+    @media (max-width: 1570px){
+        width: unset;
+        height: unset;
+    }
 
     img {
-    width: 90%;
-    object-fit: cover;
-    border-radius: 30%;
+        width: 90%;
+        object-fit: cover;
+        @media (max-width: 1570px){
+            width: 150px;
+            height: 150px;
+        }
     }
 `;
 

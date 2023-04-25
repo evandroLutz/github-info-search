@@ -24,6 +24,9 @@ const Repo = styled.div`
     svg, span{
         color: #7c5295 !important;
     }
+    @media (max-width: 1570px){
+        height: 140px;
+    }
 `;
    
 export default Repo;

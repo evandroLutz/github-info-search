@@ -28,7 +28,7 @@ import VerticalContainer from "../styles/VerticalContainer";
 
 function Main(): JSX.Element {
 
-  const [userInfos, setUserInfos] = useState<IUserInfos>({ avatar_url: "", message: "", name: "", location: "", public_repos: 0 });
+  const [userInfos, setUserInfos] = useState<IUserInfos>({ avatar_url: "", message: "not found", name: "", location: "", public_repos: 0 });
   const [userRepos, setUserRepos] = useState<IUserRepos[]>([]);
   const [filteredUserRepos, setfilteredUserRepos] = useState<IUserRepos[]>([]);
   const [filteredLang, setfilteredLang] = useState<string>('Todas');
@@ -37,17 +37,18 @@ function Main(): JSX.Element {
   const [filteredSize, setfilteredSize] = useState<number | null>(null);
   const [orderedBy, setOrderedBy] = useState<string>('alphabetic');
   const [userName, setUserName] = useState<string>('evandroLutz');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
-      const generalInfos = await getUserInfos(userName);
-      if(!generalInfos.message){
-        console.log(generalInfos,'general');
-        const allUserRepos = await getAllUserRepos(userName);
-        setUserInfos(generalInfos);
-        setUserRepos(allUserRepos);
-        setfilteredUserRepos(allUserRepos);
-      }
+        const generalInfos = await getUserInfos(userName);
+        if(!generalInfos.message){
+          const allUserRepos = await getAllUserRepos(userName);
+          setUserInfos(generalInfos);
+          setUserRepos(allUserRepos);
+          setfilteredUserRepos(allUserRepos);
+        }
+        setIsLoading(false);
     })();
   }, [userName]);
 
@@ -55,16 +56,15 @@ function Main(): JSX.Element {
     const organizedRepos = organizeRepos(filteredLang, filteredName, userRepos, orderedBy, hasFork, filteredSize);
     setfilteredUserRepos(organizedRepos);
   }, [filteredLang, filteredName, userRepos, orderedBy, hasFork, filteredSize]);
-
+  
   return (
     <div className="App">
       <header className="App-header">
         { 
-        !userInfos.message ? 
         <>
         <UserInfosContext.Provider value={userInfos}>
           <HorizontalContainer>
-            <UserPic/>
+            <UserPic/> 
             <UserInfos/>
           </HorizontalContainer>
         </UserInfosContext.Provider>
@@ -72,7 +72,7 @@ function Main(): JSX.Element {
         <UserAllReposContext.Provider 
           value={{ hasFork, setHasFork, orderedBy, 
             setOrderedBy, setfilteredSize, setfilteredName, setfilteredLang, 
-            filteredUserRepos, userRepos, setfilteredUserRepos, setUserName
+            filteredUserRepos, userRepos, setfilteredUserRepos, setUserName, setIsLoading
           }}>
 
           <ContentContainerDivisor>
@@ -82,9 +82,9 @@ function Main(): JSX.Element {
 
             <>
               <UserAllReposContext.Provider value={{ hasFork, setHasFork, orderedBy, setOrderedBy, setfilteredSize, 
-                setfilteredName, setfilteredLang, filteredUserRepos, userRepos: filteredUserRepos, setfilteredUserRepos, setUserName }}> 
+                setfilteredName, setfilteredLang, filteredUserRepos, userRepos: filteredUserRepos, setfilteredUserRepos, setUserName, isLoading }}> 
                 <>
-                  <UserRepoContainer/>
+                <UserRepoContainer/>
                 </>
               </UserAllReposContext.Provider>
             </>
@@ -107,7 +107,6 @@ function Main(): JSX.Element {
 
         </UserAllReposContext.Provider>
         </>
-        : null
         }
       </header>
     </div>

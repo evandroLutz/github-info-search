@@ -24,7 +24,7 @@ function DropDownFilter(): JSX.Element {
                 <option value='' disabled selected hidden>linguagem.</option>
                 {
                      languages?.map((language, index) => (
-                        <option value={language} >{language}</option>
+                        <option key={index} value={language} >{language}</option>
                     ))
                 }
                 <option value='Todas' >Todas</option>

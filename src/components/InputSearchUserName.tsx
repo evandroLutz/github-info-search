@@ -7,17 +7,27 @@ import { FaSearch } from 'react-icons/fa';
 
 function InputSearchUserName(): JSX.Element {
 
-    const { setUserName } = useContext(UserAllReposContext);
+    const { setUserName, setIsLoading  } = useContext(UserAllReposContext);
 
     const [inputValue, setInputValue] = useState<string>('evandroLutz');
+    
+    const [lastInputValue, setLastInputValue] = useState<string>('evandroLutz');
 
     return( 
       <>
       <Input onChange={event => {
-        setInputValue(event.target.value ? event.target.value: 'evandroLutz')}} type="search" placeholder="evandroLutz"/>
+        setInputValue(event.target.value === ''? 'evandroLutz': event.target.value);
+        }} type="search" placeholder="evandroLutz"/>
       <Button onClick={event => {
-        setUserName(inputValue)}}>Buscar usuário <FaSearch/></Button>
-        
+          if (inputValue === lastInputValue) {
+            alert('Por favor, preencha um nome diferente para buscar.');
+            return setIsLoading ? setIsLoading(false) : null;
+        } else {
+            setUserName(inputValue);
+            setLastInputValue(inputValue);
+            return setIsLoading ? setIsLoading(true) : null;
+        }
+        }}>Buscar usuário <FaSearch/></Button>
       </>
     )
 }
