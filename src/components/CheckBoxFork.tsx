@@ -1,6 +1,9 @@
 import React from 'react';
 import { useContext } from "react";
 import UserAllReposContext from '../contexts/UserAllReposContext';
+import RadioContainer from '../styles/RadioContainer';
+import SvgContainer from '../styles/SvgContainer';
+import { FaGitAlt, FaVial } from  'react-icons/fa';
 
 function InputSearch(): JSX.Element {
 
@@ -19,7 +22,7 @@ function InputSearch(): JSX.Element {
     }
 
     return( 
-        <div>
+        <RadioContainer>
             <label>
                 <input
                     type="checkbox"
@@ -28,7 +31,11 @@ function InputSearch(): JSX.Element {
                     onChange={oncheckBoxChange}
                     checked={hasFork.includes('sim')}
                 />
-                Sim
+                <span className="checkmark"></span>
+                <SvgContainer>                
+                <FaGitAlt/>
+                    Sim
+                </SvgContainer>
             </label>
             <label>
                 <input
@@ -38,9 +45,13 @@ function InputSearch(): JSX.Element {
                     onChange={oncheckBoxChange}
                     checked={hasFork.includes('não')}
                 />
-                Não
+                <span className="checkmark"></span>
+                <SvgContainer>                
+                <FaVial/>
+                    Não
+                </SvgContainer>                
             </label>
-      </div>
+      </RadioContainer>
     )
 }
 

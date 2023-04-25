@@ -12,6 +12,8 @@ interface IUserAllRepos {
   orderedBy: string;
   hasFork: string[];
   setHasFork: React.Dispatch<React.SetStateAction<string[]>>
+  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>
+  isLoading?: boolean;
 }
 
 export default IUserAllRepos;

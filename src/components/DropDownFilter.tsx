@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserAllReposContext from '../contexts/UserAllReposContext';
 import getAllLanguages from '../actions/getAllLanguages';
-
+import DropDown from '../styles/DropDown';
+import SvgContainer from '../styles/SvgContainer';
+import { FaRegFileCode } from  'react-icons/fa';
 function DropDownFilter(): JSX.Element {
 
     const [languages, setLanguages] = useState<string[]>();
@@ -16,17 +18,18 @@ function DropDownFilter(): JSX.Element {
 
 
     return(
-        <div className='dropDown'>
-            <select name='languages' id='languages' onChange={event => setfilteredLang(event.target.value)}>
+        <SvgContainer className='dropDown'>
+            <FaRegFileCode/>
+            <DropDown name='languages' id='languages' onChange={event => setfilteredLang(event.target.value)}>
                 <option value='' disabled selected hidden>linguagem.</option>
                 {
                      languages?.map((language, index) => (
-                        <option value={language} >{language}</option>
+                        <option key={index} value={language} >{language}</option>
                     ))
                 }
                 <option value='Todas' >Todas</option>
-            </select>
-        </div>    
+            </DropDown>
+        </SvgContainer>    
     )
 }
 
